@@ -43,7 +43,7 @@ function PracticeTrials({ onComplete }) {
       <div className="practice-container">
         <div className="practice-header">
           <h2>연습 시행</h2>
-          <p>"{PRACTICE_WORDS[currentTrial]}"을(를) 의미하는 그림을 선택해주세요</p>
+          <p>"{PRACTICE_WORDS[currentTrial]}" 찾기</p>
           <div className="progress">
             {currentTrial + 1} / {PRACTICE_WORDS.length}
           </div>
