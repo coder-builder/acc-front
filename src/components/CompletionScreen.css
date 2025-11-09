@@ -1,0 +1,141 @@
+.completion-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: #f5f5f5;
+}
+
+.completion-content {
+  background: white;
+  padding: 48px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+}
+
+.completion-icon {
+  font-size: 80px;
+  color: #4285F4;
+  margin-bottom: 24px;
+  animation: checkmark 0.6s ease-in-out;
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.completion-content h1 {
+  color: #333;
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+
+.thank-you-message {
+  background: #f1f8e9;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+
+.thank-you-message p {
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.thank-you-message p:last-child {
+  margin-bottom: 0;
+}
+
+.next-steps {
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.next-steps h2 {
+  color: #4285F4;
+  font-size: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.next-steps ul {
+  margin-left: 24px;
+  line-height: 1.8;
+}
+
+.next-steps li {
+  margin-bottom: 12px;
+  color: #555;
+}
+
+.contact-info {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+}
+
+.contact-info h3 {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.contact-info p {
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.closing-message {
+  padding-top: 24px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.highlight {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4285F4;
+  margin-bottom: 8px;
+}
+
+.small-text {
+  font-size: 14px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .completion-content {
+    padding: 32px 24px;
+  }
+  
+  .completion-icon {
+    font-size: 60px;
+  }
+  
+  .completion-content h1 {
+    font-size: 24px;
+  }
+  
+  .next-steps h2 {
+    font-size: 18px;
+  }
+  
+  .highlight {
+    font-size: 16px;
+  }
+}

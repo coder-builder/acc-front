@@ -1,0 +1,136 @@
+.practice-container {
+  min-height: 100vh;
+  padding-left: 320px;
+  background-color: #fffef8;
+}
+
+.practice-header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #fff;
+  padding: 2rem 1rem;
+  border-right: 3px solid #4CAF50;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.practice-header h2 {
+  margin: 0 0 1rem 0;
+  color: #4CAF50;
+  font-size: 1.3rem;
+}
+
+.practice-header p {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #fffacd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 3px solid #ffd700;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.progress {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+/* 모바일: 가로 모드 강제 안내 */
+.rotate-message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.95);
+  color: white;
+  z-index: 9999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.rotate-icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  animation: rotate 2s infinite;
+}
+
+@keyframes rotate {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(90deg); }
+}
+
+.rotate-message h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.rotate-message p {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* 모바일: 세로 모드일 때 회전 메시지 표시 */
+@media (max-width: 768px) and (orientation: portrait) {
+  .practice-container,
+  .practice-header {
+    display: none !important;
+  }
+  
+  .rotate-message {
+    display: flex !important;
+  }
+}
+
+/* 모바일: 가로 모드 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .practice-container {
+    padding-left: 0;
+    padding-top: 140px;
+  }
+
+  .practice-header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 120px;
+    padding: 1rem;
+    border-right: none;
+    border-bottom: 3px solid #4CAF50;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .practice-header h2 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .practice-header p {
+    font-size: 1.2rem;
+    padding: 0.8rem;
+    margin: 0;
+  }
+
+  .progress {
+    font-size: 1rem;
+    margin: 0;
+  }
+}

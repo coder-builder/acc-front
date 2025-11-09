@@ -1,0 +1,121 @@
+.symbol-grid-container {
+  position: relative;
+  z-index: 50;
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  min-height: 100vh;
+}
+
+.symbol-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.7rem;
+  width: 100%;
+  max-width: min(85vw, 900px);
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.symbol-cell {
+  aspect-ratio: 1;
+  border: 3px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  overflow: hidden;
+  position: relative;
+  z-index: 100;
+  width: 100%;
+}
+
+.symbol-cell:hover {
+  border-color: #4CAF50;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.symbol-cell.selected {
+  border-color: #4CAF50;
+  background-color: #e8f5e9;
+}
+
+.symbol-cell.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.symbol-cell img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.symbol-placeholder {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  padding: 1rem;
+}
+
+.error-feedback {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #f44336;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* PC 화면: 격자 크기 최적화 */
+@media (min-width: 1200px) {
+  .symbol-grid {
+    max-width: min(75vw, 1000px);
+    gap: 1rem;
+  }
+}
+
+/* 중간 화면 */
+@media (max-width: 1199px) and (min-width: 769px) {
+  .symbol-grid {
+    gap: 0.6rem;
+    max-width: 80vw;
+  }
+}
+
+/* 모바일 가로 모드: 격자 크기 줄이기 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .symbol-grid-container {
+    padding: 0.5rem;
+    min-height: auto;
+  }
+
+  .symbol-grid {
+    gap: 0.4rem;
+    max-width: 95vw;
+  }
+}
+
+/* 작은 화면: 격자 크기 더 줄이기 */
+@media (max-height: 600px) and (orientation: landscape) {
+  .symbol-grid {
+    gap: 0.3rem;
+  }
+
+  .symbol-cell {
+    border-width: 2px;
+  }
+}

@@ -1,0 +1,153 @@
+.experiment-container {
+  min-height: 100vh;
+  padding-left: 320px;
+  background-color: #fffef8;
+}
+
+.experiment-header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #fff;
+  padding: 2rem 1rem;
+  border-right: 3px solid #2196F3;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #2196F3;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  margin: 0.5rem 0 1rem 0;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.experiment-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #e3f2fd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 3px solid #2196F3;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  color: #666;
+}
+
+/* 모바일: 가로 모드 강제 안내 */
+.rotate-message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.95);
+  color: white;
+  z-index: 9999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.rotate-icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  animation: rotate 2s infinite;
+}
+
+@keyframes rotate {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(90deg); }
+}
+
+.rotate-message h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.rotate-message p {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* 모바일: 세로 모드일 때 회전 메시지 표시 */
+@media (max-width: 768px) and (orientation: portrait) {
+  .experiment-container,
+  .experiment-header {
+    display: none !important;
+  }
+  
+  .rotate-message {
+    display: flex !important;
+  }
+}
+
+/* 모바일: 가로 모드 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .experiment-container {
+    padding-left: 0;
+    padding-top: 140px;
+  }
+
+  .experiment-header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 120px;
+    padding: 1rem;
+    border-right: none;
+    border-bottom: 3px solid #2196F3;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .progress-bar {
+    width: 150px;
+    height: 8px;
+  }
+
+  .progress-text {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .experiment-header h2 {
+    font-size: 1.2rem;
+    padding: 0.8rem;
+  }
+}
