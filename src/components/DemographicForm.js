@@ -64,8 +64,8 @@ function DemographicForm({ onComplete }) {
     }
 
     const age = parseInt(formData.age);
-    if (age < 19 || age > 39) {
-      setError('연령은 19세~39세 사이여야 합니다.');
+    if (age < 19 || age > 59) {
+      setError('연령은 19세~59세 사이여야 합니다.');
       return;
     }
 
@@ -139,11 +139,11 @@ function DemographicForm({ onComplete }) {
               value={formData.age}
               onChange={handleChange}
               min="19"
-              max="39"
+              max="59"
               placeholder="예: 25"
               required
             />
-            <small>만 19세~39세</small>
+            <small>만 19세~59세</small>
           </div>
 
           <div className="form-group">
