@@ -3,16 +3,31 @@ import './CompletionScreen.css';
 import { apiClient, API_ENDPOINTS } from '../config/api';
 
 function CompletionScreen({ experimentData }) {
-  const [status, setStatus] = useState('sending'); // sending, success, error
-  const [message, setMessage] = useState('데이터를 전송하는 중...');
+  const [status, setStatus] = useState('sending');
+  const [message, setMessage] = useState('데이터를 전송하는 중');
   const [participantId, setParticipantId] = useState(null);
+  const [dots, setDots] = useState('');
+
+  // 로딩 애니메이션 (. .. ...)
+  useEffect(() => {
+    if (status === 'sending') {
+      const interval = setInterval(() => {
+        setDots(prev => {
+          if (prev === '...') return '';
+          return prev + '.';
+        });
+      }, 500);
+      
+      return () => clearInterval(interval);
+    }
+  }, [status]);
 
   useEffect(() => {
     const sendData = async () => {
       try {
         console.log('📤 Sending experiment data...', experimentData);
 
-        // 1. 실험 데이터 전송 (participant 생성 + trial 저장)
+        // 1. 실험 데이터 전송
         const mainData = await apiClient.post(API_ENDPOINTS.completeExperiment, {
           demographic: experimentData.demographic,
           practice_results: experimentData.practiceResults,
@@ -26,7 +41,7 @@ function CompletionScreen({ experimentData }) {
         
         console.log('✅ Main data saved. Participant ID:', newParticipantId);
 
-        // 2. 단어별 선호도 전송 (symbolPreferences)
+        // 2. 단어별 선호도 전송
         if (experimentData.symbolPreferences && 
             experimentData.symbolPreferences.length === 7) {
           
@@ -41,7 +56,6 @@ function CompletionScreen({ experimentData }) {
             console.log('✅ Symbol preferences saved:', prefData);
           } catch (prefError) {
             console.error('⚠️ Symbol preferences 전송 실패:', prefError);
-            // 이건 실패해도 계속 진행 (선호도는 선택사항)
           }
         } else {
           console.log('⚠️ No symbol preferences to send');
@@ -80,8 +94,9 @@ function CompletionScreen({ experimentData }) {
         {status === 'sending' && (
           <>
             <div className="spinner">⏳</div>
-            <h1>데이터 전송 중...</h1>
-            <p>{message}</p>
+            <h1>데이터를 전송하는 중{dots}</h1>
+            <p className="loading-time">약 10~15초 소요됩니다</p>
+            <p className="loading-subtitle">잠시만 기다려주세요</p>
           </>
         )}
 

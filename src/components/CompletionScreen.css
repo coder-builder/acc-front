@@ -139,3 +139,29 @@
     font-size: 16px;
   }
 }
+
+/* 로딩 애니메이션 */
+.loading-time {
+  font-size: 1rem;
+  color: #666;
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.loading-subtitle {
+  font-size: 0.9rem;
+  color: #999;
+  margin-top: 0.5rem;
+}
+
+/* 스피너 애니메이션 */
+.spinner {
+  font-size: 3rem;
+  animation: spin 2s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -48,7 +48,7 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
 
   const handleSymbolClick = (index, word) => {
     if (!isSelectable) return;
-
+    
     // 반응시간 계산 (밀리초)
     const reactionTime = Date.now() - startTime;
     
@@ -60,10 +60,10 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
       setErrorCount(prev => prev + 1);
       alert('다시 선택해주세요!');
       
-      // 0.5초 후 다시 선택 가능
+      // 0.5초 후 선택 해제
       setIsSelectable(false);
       setTimeout(() => {
-        setSelectedIndex(null);
+        setSelectedIndex(null);  // ← 선택 해제!
         setIsSelectable(true);
       }, 500);
       return;
@@ -72,6 +72,7 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
     // 정답 처리
     setIsSelectable(false);
     setTimeout(() => {
+      setSelectedIndex(null);  // ← 다음 시행 전 선택 해제!
       onSelect(word, true, reactionTime, errorCount);
     }, 300);
   };
