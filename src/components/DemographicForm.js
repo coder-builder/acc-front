@@ -4,7 +4,7 @@ import './DemographicForm.css';
 function DemographicForm({ onComplete }) {
   const [formData, setFormData] = useState({
     name: '',
-    phone_last4: '',
+    phone: '', // phone_last4 → phone으로 변경
     age: '',
     gender: '',
     education: '',
@@ -17,24 +17,49 @@ function DemographicForm({ onComplete }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    
+    // 전화번호 자동 포맷팅
+    if (name === 'phone') {
+      // 숫자만 추출
+      const numbers = value.replace(/[^0-9]/g, '');
+      
+      // 8자리까지만 허용
+      if (numbers.length <= 8) {
+        setFormData(prev => ({
+          ...prev,
+          [name]: numbers
+        }));
+      }
+      return;
+    }
+    
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
   };
 
+  // 전화번호 표시 형식 (010-XXXX-XXXX)
+  const formatPhone = (numbers) => {
+    if (!numbers) return '010-';
+    if (numbers.length <= 4) {
+      return `010-${numbers}`;
+    }
+    return `010-${numbers.slice(0, 4)}-${numbers.slice(4)}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
     // 유효성 검사
-    if (!formData.name || !formData.phone_last4 || !formData.age || !formData.gender || !formData.vision) {
+    if (!formData.name || !formData.phone || !formData.age || !formData.gender || !formData.education || !formData.vision) {
       setError('필수 항목을 모두 입력해주세요.');
       return;
     }
 
-    // 연락처 유효성 검사
-    if (formData.phone_last4.length !== 4 || !/^\d{4}$/.test(formData.phone_last4)) {
-      setError('연락처 뒷자리 4자리를 정확히 입력해주세요.');
+    // 전화번호 유효성 검사 (8자리)
+    if (formData.phone.length !== 8) {
+      setError('전화번호 8자리를 모두 입력해주세요.');
       return;
     }
 
@@ -50,8 +75,14 @@ function DemographicForm({ onComplete }) {
       return;
     }
 
-    // ✅ DB 저장 없이 데이터만 반환!
-    onComplete(formData);
+    // 완전한 전화번호로 저장
+    const fullPhone = `010${formData.phone}`;
+    
+    onComplete({
+      ...formData,
+      phone_last4: formData.phone.slice(-4), // 뒷 4자리도 저장
+      phone: fullPhone // 전체 번호 저장
+    });
   };
 
   return (
@@ -75,19 +106,28 @@ function DemographicForm({ onComplete }) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="phone_last4">연락처 뒷자리 *</label>
-            <input
-              type="text"
-              id="phone_last4"
-              name="phone_last4"
-              value={formData.phone_last4}
-              onChange={handleChange}
-              maxLength="4"
-              placeholder="예: 1234"
-              pattern="\d{4}"
-              required
-            />
-            <small>휴대폰 번호 뒷자리 4자리 (예: 010-1234-5678 → 5678)</small>
+            <label htmlFor="phone">연락처 *</label>
+            <div className="phone-input-wrapper">
+              <span className="phone-prefix">010-</span>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="12345678"
+                maxLength="8"
+                pattern="[0-9]{8}"
+                required
+                className="phone-input"
+              />
+            </div>
+            <small>하이픈(-) 없이 8자리 숫자만 입력 (예: 12345678 → 010-1234-5678)</small>
+            {formData.phone && (
+              <div className="phone-preview">
+                입력 결과: <strong>{formatPhone(formData.phone)}</strong>
+              </div>
+            )}
           </div>
 
           <div className="form-group">
@@ -135,6 +175,23 @@ function DemographicForm({ onComplete }) {
           </div>
 
           <div className="form-group">
+            <label htmlFor="education">최종 학력 *</label>
+            <select
+              id="education"
+              name="education"
+              value={formData.education}
+              onChange={handleChange}
+              required
+            >
+              <option value="">선택해주세요</option>
+              <option value="고등학교 졸업 이하">고등학교 졸업 혹은 그 이하</option>
+              <option value="전문대학 졸업">전문대학 졸업</option>
+              <option value="대학교 졸업">대학교 졸업</option>
+              <option value="대학원 졸업/수료">대학원 졸업/수료</option>
+            </select>
+          </div>
+
+          <div className="form-group">
             <label>시력 *</label>
             <div className="radio-group">
               <label>
@@ -160,22 +217,6 @@ function DemographicForm({ onComplete }) {
                 교정 (안경/렌즈)
               </label>
             </div>
-          </div>
-
-          <div className="form-group">
-              <label htmlFor="education">최종 학력</label>
-              <select
-                  id="education"
-                  name="education"
-                  value={formData.education}
-                  onChange={handleChange}
-              >
-                  <option value="">선택</option>
-                  <option value="고등학교 졸업 이하">고등학교 졸업 혹은 그 이하</option>
-                  <option value="전문대학 졸업">전문대학 졸업</option>
-                  <option value="대학교 졸업">대학교 졸업</option>
-                  <option value="대학원 졸업/수료">대학원 졸업/수료</option>
-              </select>
           </div>
 
           <div className="form-group">

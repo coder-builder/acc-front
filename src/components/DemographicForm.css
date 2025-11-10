@@ -1,10 +1,13 @@
+/* 컨테이너 - 스크롤 가능 */
 .demographic-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 2rem 1rem;
   background-color: #f5f5f5;
+  overflow-y: auto; /* 스크롤 허용! */
+  -webkit-overflow-scrolling: touch;
 }
 
 .demographic-content {
@@ -14,6 +17,7 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   max-width: 600px;
   width: 100%;
+  margin: 2rem auto; /* 위아래 여백 */
 }
 
 .demographic-content h1 {
@@ -42,6 +46,7 @@
 }
 
 .form-group input[type="text"],
+.form-group input[type="tel"],
 .form-group input[type="number"],
 .form-group select {
   width: 100%;
@@ -67,7 +72,57 @@
   font-size: 0.9rem;
 }
 
-/* 라디오 버튼 그룹 */
+/* ========== 전화번호 입력 ========== */
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.phone-input-wrapper:focus-within {
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.phone-prefix {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  white-space: nowrap;
+  min-width: 50px;
+}
+
+.phone-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  background: transparent;
+  font-weight: 500;
+}
+
+.phone-preview {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #f0f8ff 0%, #e8f5e9 100%);
+  border-left: 4px solid #4CAF50;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.phone-preview strong {
+  color: #4CAF50;
+  font-size: 1.1rem;
+}
+
+/* ========== 라디오 버튼 그룹 ========== */
 .radio-group {
   display: flex;
   gap: 2rem;
@@ -87,7 +142,25 @@
   cursor: pointer;
 }
 
-/* 에러 메시지 */
+/* ========== 체크박스 ========== */
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+/* ========== 에러 메시지 ========== */
 .error-message {
   background-color: #fee;
   color: #c33;
@@ -98,7 +171,7 @@
   font-weight: 500;
 }
 
-/* 제출 버튼 */
+/* ========== 제출 버튼 ========== */
 .btn-primary {
   width: 100%;
   padding: 1.2rem;
@@ -110,6 +183,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
 .btn-primary:hover {
@@ -122,10 +196,15 @@
   transform: translateY(0);
 }
 
-/* 반응형 */
+/* ========== 반응형 ========== */
 @media (max-width: 768px) {
+  .demographic-container {
+    padding: 1rem;
+  }
+
   .demographic-content {
-    padding: 2rem;
+    padding: 2rem 1.5rem;
+    margin: 1rem auto;
   }
 
   .demographic-content h1 {
@@ -135,5 +214,44 @@
   .radio-group {
     flex-direction: column;
     gap: 1rem;
+  }
+  
+  .form-group label {
+    font-size: 1rem;
+  }
+  
+  .btn-primary {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .demographic-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .demographic-content h1 {
+    font-size: 1.3rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .phone-prefix {
+    font-size: 0.9rem;
+    min-width: 45px;
+  }
+  
+  .phone-input {
+    font-size: 0.9rem;
+  }
+}
+
+/* ========== iOS 키보드 대응 ========== */
+@supports (padding: max(0px)) {
+  .demographic-container {
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
   }
 }

@@ -32,30 +32,23 @@ function PracticeTrials({ onComplete }) {
   };
 
   return (
-    <>
-      {/* 가로 모드 전환 안내 (모바일 세로일 때만) */}
-      <div className="rotate-message">
-        <div className="rotate-icon">📱 → 🔄</div>
-        <h2>화면을 가로로 돌려주세요</h2>
-        <p>실험을 진행하려면 가로 모드가 필요합니다</p>
-      </div>
-
-      <div className="practice-container">
-        <div className="practice-header">
-          <h2>연습 시행</h2>
-          <p>"{PRACTICE_WORDS[currentTrial]}" 찾기</p>
-          <div className="progress">
-            {currentTrial + 1} / {PRACTICE_WORDS.length}
-          </div>
+    <div className="practice-container">
+      <div className="practice-header">
+        <h2>연습 시행</h2>
+        <p className="target-instruction">
+          "<span className="target-word">{PRACTICE_WORDS[currentTrial]}</span>" 을(를) 의미하는 그림을 선택해주세요
+        </p>
+        <div className="progress">
+          {currentTrial + 1} / {PRACTICE_WORDS.length}
         </div>
-
-        <SymbolGrid 
-          targetWord={PRACTICE_WORDS[currentTrial]}
-          symbolType={currentTrial === 0 ? "ai" : "kaac"}
-          onSelect={handleSymbolSelect}
-        />
       </div>
-    </>
+
+      <SymbolGrid 
+        targetWord={PRACTICE_WORDS[currentTrial]}
+        symbolType={currentTrial === 0 ? "ai" : "kaac"}
+        onSelect={handleSymbolSelect}
+      />
+    </div>
   );
 }
 

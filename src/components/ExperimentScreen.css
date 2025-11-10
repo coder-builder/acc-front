@@ -1,19 +1,27 @@
-/* 전체 컨테이너 */
+/* 전체 컨테이너 - 고정 레이아웃 */
 .experiment-container {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
   background: #f8f9fa;
+  overflow: hidden;
 }
 
-/* ========== 헤더 영역 (최소화) ========== */
+/* 헤더 영역 */
 .experiment-header {
   background: #fff;
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem;
+  border-bottom: 2px solid #e0e0e0;
   flex-shrink: 0;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 /* 진행 바 */
@@ -28,7 +36,7 @@
 
 .progress-fill {
   height: 100%;
-  background: #4CAF50;
+  background: linear-gradient(90deg, #4CAF50, #45a049);
   transition: width 0.3s ease;
 }
 
@@ -36,96 +44,26 @@
 .progress-text {
   font-size: 0.85rem;
   color: #666;
-  margin: 0.3rem 0;
+  margin: 0.3rem 0 0.5rem 0;
+  font-weight: 500;
 }
 
-/* 메인 지시문 - 모바일 최적화 */
-.experiment-header h2 {
+/* 지시문 */
+.target-instruction {
   font-size: 1rem;
   margin: 0.5rem 0 0 0;
   color: #333;
-  font-weight: 600;
-  line-height: 1.3;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
-/* 모바일: 폰트 작게 */
-@media (max-width: 768px) {
-  .experiment-header {
-    padding: 0.6rem 0.8rem;
-  }
-  
-  .experiment-header h2 {
-    font-size: 0.9rem;
-  }
+.target-word {
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
-/* 작은 모바일 */
-@media (max-width: 375px) {
-  .experiment-header {
-    padding: 0.5rem 0.6rem;
-  }
-  
-  .progress-text {
-    font-size: 0.8rem;
-  }
-  
-  .experiment-header h2::before,
-  .experiment-header h2::after {
-    font-size: 0.9rem;
-  }
-}
-
-/* ========== 가로 모드 전환 안내 ========== */
-.rotate-message {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #fff;
-  z-index: 9999;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-}
-
-.rotate-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  animation: rotate 2s infinite;
-}
-
-@keyframes rotate {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(90deg); }
-}
-
-.rotate-message h2 {
-  font-size: 1.5rem;
-  margin: 1rem 0;
-  color: #333;
-}
-
-.rotate-message p {
-  font-size: 1rem;
-  color: #666;
-}
-
-/* 세로 모드일 때만 회전 메시지 표시 */
-@media (max-width: 768px) and (orientation: portrait) {
-  .rotate-message {
-    display: flex;
-  }
-  
-  .experiment-container {
-    display: none;
-  }
-}
-
-/* ========== 로딩 화면 ========== */
+/* 로딩 화면 */
 .loading {
   display: flex;
   justify-content: center;
@@ -136,13 +74,42 @@
   background: #f8f9fa;
 }
 
-/* iOS Safe Area 대응 */
-@supports (padding: max(0px)) {
-  .experiment-container {
-    padding-top: max(0px, env(safe-area-inset-top));
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+  .experiment-header {
+    padding: 0.8rem;
   }
   
+  .target-instruction {
+    font-size: 0.9rem;
+  }
+  
+  .target-word {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
   .experiment-header {
-    padding-top: max(0.8rem, calc(env(safe-area-inset-top) + 0.8rem));
+    padding: 0.6rem;
+  }
+  
+  .progress-text {
+    font-size: 0.8rem;
+  }
+  
+  .target-instruction {
+    font-size: 0.85rem;
+  }
+  
+  .target-word {
+    font-size: 1rem;
+  }
+}
+
+/* iOS Safe Area */
+@supports (padding: max(0px)) {
+  .experiment-header {
+    padding-top: max(1rem, env(safe-area-inset-top));
   }
 }
