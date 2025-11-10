@@ -1,12 +1,13 @@
-// API 기본 설정 (상대 경로 사용!)
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://223.130.131.18';
+// API 기본 설정 - 비워두기!
+const API_BASE_URL = '';
 
 // API 클라이언트
 export const apiClient = {
   post: async (endpoint, data) => {
-    console.log(`🔵 POST ${API_BASE_URL}${endpoint}`, data);
+    const fullUrl = `${API_BASE_URL}${endpoint}`;
+    console.log(`🔵 POST ${fullUrl}`, data);
     
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const response = await fetch(fullUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,9 +25,10 @@ export const apiClient = {
   },
   
   get: async (endpoint) => {
-    console.log(`🔵 GET ${API_BASE_URL}${endpoint}`);
+    const fullUrl = `${API_BASE_URL}${endpoint}`;
+    console.log(`🔵 GET ${fullUrl}`);
     
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const response = await fetch(fullUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
