@@ -260,16 +260,15 @@
   }
 }
 
-/* 매우 작은 모바일 - 세로 배치 */
+/* 매우 작은 모바일 - 가로 유지! */
 @media (max-width: 500px) {
   .options-container {
-    flex-direction: column;
-    gap: 0.8rem;
+    gap: 0.5rem;
   }
 
   .image-option,
   .similar-option {
-    max-width: 100%;
+    max-width: none;
   }
 }
 

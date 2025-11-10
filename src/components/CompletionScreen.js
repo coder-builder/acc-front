@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './CompletionScreen.css';
+import { apiClient, API_ENDPOINTS } from '../config/api';
+
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://223.130.131.18/api';
 
