@@ -1,4 +1,4 @@
-// API 기본 설정
+// API 기본 설정 (상대 경로 사용!)
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://223.130.131.18';
 
 // API 클라이언트
@@ -58,7 +58,7 @@ export const API_ENDPOINTS = {
   preferences: '/api/preference/',
   getPreference: (participantId) => `/api/preference/${participantId}/`,
   
-  // 🆕 새로 추가
+  // 실험 완료 및 단어별 선호도
   completeExperiment: '/api/complete-experiment/',
   submitSymbolPreferences: '/api/submit-symbol-preferences/',
   getSymbolPreferences: (participantId) => `/api/symbol-preferences/${participantId}/`,
