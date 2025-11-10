@@ -4,7 +4,7 @@ import './SymbolGrid.css';
 // 전체 어휘 목록
 const VOCABULARY = ["안녕하세요", "고마워요", "미안합니다", "좋아요", "싫어요", "도와주세요", "배고파요"];
 
-// 방해 자극용 어휘 (AI 폴더에 있는 모든 단어 - 본 실험 단어 제외)
+// 방해 자극용 어휘
 const DISTRACTOR_POOL = [
   "가요", "가져왔어요", "괜찮아요", "나가요", "나와요", "놀아요", "놓아요",
   "들어요", "마셔요", "먹어요", "몰라요", "바라봐요", "받아요",
@@ -20,21 +20,22 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
   const [isSelectable, setIsSelectable] = useState(true);
 
   useEffect(() => {
-    generateSymbolArray();
-    setStartTime(Date.now());
+    // 새 시행 시작 - 모든 상태 초기화!
+    setSelectedIndex(null);
     setErrorCount(0);
     setIsSelectable(true);
-    setSelectedIndex(null);
+    generateSymbolArray();
+    setStartTime(Date.now());
   }, [targetWord, symbolType]);
 
   const generateSymbolArray = () => {
-    // 목표 상징을 제외한 방해 자극 풀 (본 실험 단어 + 연습 단어 모두 제외)
+    // 방해 자극 풀에서 목표 단어 제외
     const availableDistractors = DISTRACTOR_POOL.filter(w => w !== targetWord);
     
     // 셔플
     const shuffled = [...availableDistractors].sort(() => Math.random() - 0.5);
     
-    // 15개 선택
+    // 7개 선택
     const selected_distractors = shuffled.slice(0, 7);
     
     // 목표 상징 추가
@@ -63,7 +64,7 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
       // 0.5초 후 선택 해제
       setIsSelectable(false);
       setTimeout(() => {
-        setSelectedIndex(null);  // ← 선택 해제!
+        setSelectedIndex(null);  // 선택 해제!
         setIsSelectable(true);
       }, 500);
       return;
@@ -71,8 +72,10 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
     
     // 정답 처리
     setIsSelectable(false);
+    
+    // 300ms 후 다음 시행으로
     setTimeout(() => {
-      setSelectedIndex(null);  // ← 다음 시행 전 선택 해제!
+      setSelectedIndex(null);  // 명시적 선택 해제!
       onSelect(word, true, reactionTime, errorCount);
     }, 300);
   };
@@ -86,7 +89,7 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
           
           return (
             <div
-              key={index}
+              key={`${targetWord}-${symbolType}-${index}`}
               className={`symbol-cell ${selectedIndex === index ? 'selected' : ''} ${!isSelectable ? 'disabled' : ''}`}
               onClick={() => handleSymbolClick(index, word)}
             >
@@ -94,7 +97,6 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
                 src={imagePath}
                 alt={word}
                 onError={(e) => {
-                  // 이미지 로드 실패 시 텍스트 표시
                   e.target.style.display = 'none';
                   e.target.nextElementSibling.style.display = 'flex';
                 }}

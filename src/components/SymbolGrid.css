@@ -10,7 +10,7 @@
   background: #f8f9fa;
 }
 
-/* ========== 그리드 영역 (2x4 = 8개, 스크롤 없음!) ========== */
+/* ========== 그리드 영역 (2x4 = 8개) ========== */
 .symbol-grid {
   flex: 1;
   display: grid;
@@ -20,7 +20,7 @@
   padding: 0.8rem;
   max-width: 600px;
   margin: 0 auto;
-  overflow: hidden; /* 스크롤 제거! */
+  overflow: hidden;
   background: #fff;
 }
 
@@ -33,7 +33,7 @@
   border-radius: 12px;
   background: #fff;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s ease-out; /* transition 단축 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,9 +57,10 @@
 
 .symbol-item.selected,
 .symbol-cell.selected {
-  border-color: #4CAF50;
-  background-color: #f1f8f4;
-  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);
+  border-color: #4CAF50 !important; /* !important 추가 */
+  background-color: #f1f8f4 !important;
+  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3) !important;
+  transform: scale(1.05) !important;
 }
 
 .symbol-item.disabled,
