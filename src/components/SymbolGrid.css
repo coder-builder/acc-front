@@ -1,7 +1,7 @@
 /* 전체 컨테이너 */
 .symbol-grid-container {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  height: 100vh;
+  height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -10,34 +10,34 @@
   background: #f8f9fa;
 }
 
-/* ========== 그리드 영역 (2x3 = 6개) ========== */
+/* ========== 그리드 영역 (2x4 = 8개, 스크롤 없음!) ========== */
 .symbol-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 4 → 3 */
-  grid-template-rows: repeat(2, 1fr);    /* 2행 명시 */
-  gap: 1rem; /* 0.5rem → 1rem (더 넓게!) */
-  padding: 1rem;
-  max-width: 800px;
+  grid-template-columns: repeat(2, 1fr); /* 가로 2개 */
+  grid-template-rows: repeat(4, 1fr);    /* 세로 4줄 */
+  gap: 0.8rem;
+  padding: 0.8rem;
+  max-width: 600px;
   margin: 0 auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden; /* 스크롤 제거! */
   background: #fff;
 }
 
 /* ========== 심볼 아이템 ========== */
 .symbol-item,
 .symbol-cell {
-  aspect-ratio: 1;
-  border: 3px solid #ddd; /* 2px → 3px (더 굵게!) */
-  border-radius: 12px; /* 8px → 12px */
+  width: 100%;
+  height: 100%;
+  border: 3px solid #ddd;
+  border-radius: 12px;
   background: #fff;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem; /* 0.5rem → 1rem (더 여유있게!) */
+  padding: 0.5rem;
   overflow: hidden;
   position: relative;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -47,7 +47,7 @@
 .symbol-cell:hover {
   border-color: #4CAF50;
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-  transform: translateY(-2px);
+  transform: scale(1.02);
 }
 
 .symbol-item:active,
@@ -68,7 +68,7 @@
   opacity: 0.6;
 }
 
-/* 이미지 크기 조절 */
+/* 이미지 */
 .symbol-item img,
 .symbol-cell img {
   width: 100%;
@@ -78,14 +78,14 @@
   user-select: none;
 }
 
-/* 이미지 로드 실패 시 대체 텍스트 */
+/* 이미지 로드 실패 시 */
 .symbol-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #666;
   text-align: center;
   padding: 0.5rem;
@@ -94,7 +94,7 @@
 /* 오답 피드백 */
 .error-feedback {
   position: fixed;
-  bottom: 100px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background: #ff4444;
@@ -110,51 +110,50 @@
 /* ========== 모바일 최적화 ========== */
 @media (max-width: 768px) {
   .symbol-grid {
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
-  .symbol-item,
-  .symbol-cell {
-    padding: 0.8rem;
+    gap: 0.6rem;
+    padding: 0.6rem;
   }
 }
 
 /* 작은 모바일 */
 @media (max-width: 480px) {
   .symbol-grid {
-    gap: 0.8rem;
-    padding: 0.8rem;
+    gap: 0.5rem;
+    padding: 0.5rem;
   }
   
   .symbol-item,
   .symbol-cell {
-    padding: 0.5rem;
+    padding: 0.4rem;
     border-width: 2px;
   }
 }
 
-/* 가로 모드 */
-@media (orientation: landscape) and (max-height: 600px) {
+/* 아주 작은 화면 */
+@media (max-width: 375px) {
   .symbol-grid {
-    padding: 0.5rem;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    padding: 0.4rem;
+  }
+  
+  .symbol-item,
+  .symbol-cell {
+    padding: 0.3rem;
   }
 }
 
-/* iOS Safe Area 대응 */
+/* iOS Safe Area */
 @supports (padding: max(0px)) {
   .symbol-grid-container {
-    padding-top: max(0px, env(safe-area-inset-top));
-    padding-bottom: max(0px, env(safe-area-inset-bottom));
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }
 
-/* 터치 디바이스 최적화 */
+/* 터치 디바이스 */
 @media (hover: none) and (pointer: coarse) {
   .symbol-item,
   .symbol-cell {
-    /* 터치 타겟 최소 크기 보장 (Apple HIG: 44x44pt) */
     min-width: 44px;
     min-height: 44px;
   }
