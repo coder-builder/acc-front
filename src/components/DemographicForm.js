@@ -4,7 +4,7 @@ import './DemographicForm.css';
 function DemographicForm({ onComplete }) {
   const [formData, setFormData] = useState({
     name: '',
-    phone: '', // phone_last4 → phone으로 변경
+    phone: '',
     age: '',
     gender: '',
     education: '',
@@ -20,10 +20,7 @@ function DemographicForm({ onComplete }) {
     
     // 전화번호 자동 포맷팅
     if (name === 'phone') {
-      // 숫자만 추출
       const numbers = value.replace(/[^0-9]/g, '');
-      
-      // 8자리까지만 허용
       if (numbers.length <= 8) {
         setFormData(prev => ({
           ...prev,
@@ -39,7 +36,7 @@ function DemographicForm({ onComplete }) {
     }));
   };
 
-  // 전화번호 표시 형식 (010-XXXX-XXXX)
+  // 전화번호 표시 형식
   const formatPhone = (numbers) => {
     if (!numbers) return '010-';
     if (numbers.length <= 4) {
@@ -57,7 +54,7 @@ function DemographicForm({ onComplete }) {
       return;
     }
 
-    // 전화번호 유효성 검사 (8자리)
+    // 전화번호 유효성 검사
     if (formData.phone.length !== 8) {
       setError('전화번호 8자리를 모두 입력해주세요.');
       return;
@@ -69,9 +66,9 @@ function DemographicForm({ onComplete }) {
       return;
     }
 
-    // AAC 경험 체크
-    if (formData.has_aac_experience || formData.has_aac_education) {
-      alert('죄송합니다. AAC 기기 사용 경험이나 교육 경험이 있으신 분은 참여하실 수 없습니다.');
+    // AAC 경험 체크 확인 (필수!)
+    if (!formData.has_aac_experience || !formData.has_aac_education) {
+      setError('AAC 경험 관련 항목을 모두 체크해주세요.');
       return;
     }
 
@@ -80,8 +77,10 @@ function DemographicForm({ onComplete }) {
     
     onComplete({
       ...formData,
-      phone_last4: formData.phone.slice(-4), // 뒷 4자리도 저장
-      phone: fullPhone // 전체 번호 저장
+      phone_last4: formData.phone.slice(-4),
+      phone: fullPhone,
+      has_aac_experience: false,  // DB에는 false로 저장 (경험 없음)
+      has_aac_education: false    // DB에는 false로 저장 (교육 없음)
     });
   };
 
@@ -219,27 +218,29 @@ function DemographicForm({ onComplete }) {
             </div>
           </div>
 
-          <div className="form-group">
+          <div className="form-group checkbox-required">
             <label className="checkbox-label">
               <input
                 type="checkbox"
                 name="has_aac_experience"
                 checked={formData.has_aac_experience}
                 onChange={handleChange}
+                required
               />
-              AAC 기기를 직접 사용한 경험이 있습니다
+              <strong>AAC 기기 사용 경험이 없습니다 *</strong>
             </label>
           </div>
 
-          <div className="form-group">
+          <div className="form-group checkbox-required">
             <label className="checkbox-label">
               <input
                 type="checkbox"
                 name="has_aac_education"
                 checked={formData.has_aac_education}
                 onChange={handleChange}
+                required
               />
-              AAC 관련 교육을 받았거나 연구에 참여한 경험이 있습니다
+              <strong>AAC 관련 교육이나 연구 참여 경험이 없습니다 *</strong>
             </label>
           </div>
 

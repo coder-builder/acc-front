@@ -255,3 +255,35 @@
     padding-bottom: max(2rem, env(safe-area-inset-bottom));
   }
 }
+
+/* 필수 체크박스 강조 */
+.checkbox-required {
+  background-color: #fff3cd;
+  border: 2px solid #ffc107;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem !important;
+}
+
+.checkbox-required .checkbox-label {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.checkbox-required input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.8rem;
+  cursor: pointer;
+}
+
+.checkbox-required strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* 체크박스 호버 효과 */
+.checkbox-required:hover {
+  background-color: #fff8e1;
+  border-color: #ff9800;
+}
