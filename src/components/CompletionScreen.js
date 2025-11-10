@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './CompletionScreen.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://223.130.131.18/api';
 
 function CompletionScreen({ experimentData }) {
   const [status, setStatus] = useState('sending'); // sending, success, error
