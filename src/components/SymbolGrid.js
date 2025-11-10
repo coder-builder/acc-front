@@ -35,7 +35,7 @@ function SymbolGrid({ targetWord, symbolType, onSelect }) {
     const shuffled = [...availableDistractors].sort(() => Math.random() - 0.5);
     
     // 15개 선택
-    const selected_distractors = shuffled.slice(0, 15);
+    const selected_distractors = shuffled.slice(0, 5);
     
     // 목표 상징 추가
     const all_symbols = [...selected_distractors, targetWord];

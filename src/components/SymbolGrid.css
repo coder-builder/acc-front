@@ -10,51 +10,62 @@
   background: #f8f9fa;
 }
 
-/* ========== 그리드 영역 (메인 콘텐츠) ========== */
+/* ========== 그리드 영역 (2x3 = 6개) ========== */
 .symbol-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-  padding: 0.5rem;
+  grid-template-columns: repeat(3, 1fr); /* 4 → 3 */
+  grid-template-rows: repeat(2, 1fr);    /* 2행 명시 */
+  gap: 1rem; /* 0.5rem → 1rem (더 넓게!) */
+  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   background: #fff;
 }
 
-/* ========== 심볼 아이템 (symbol-cell과 symbol-item 둘 다 지원) ========== */
+/* ========== 심볼 아이템 ========== */
 .symbol-item,
 .symbol-cell {
   aspect-ratio: 1;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  border: 3px solid #ddd; /* 2px → 3px (더 굵게!) */
+  border-radius: 12px; /* 8px → 12px */
   background: #fff;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
+  padding: 1rem; /* 0.5rem → 1rem (더 여유있게!) */
   overflow: hidden;
   position: relative;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.symbol-item:hover,
+.symbol-cell:hover {
+  border-color: #4CAF50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  transform: translateY(-2px);
 }
 
 .symbol-item:active,
 .symbol-cell:active {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }
 
 .symbol-item.selected,
 .symbol-cell.selected {
   border-color: #4CAF50;
   background-color: #f1f8f4;
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);
 }
 
 .symbol-item.disabled,
 .symbol-cell.disabled {
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 /* 이미지 크기 조절 */
@@ -74,7 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #666;
   text-align: center;
   padding: 0.5rem;
@@ -83,41 +94,51 @@
 /* 오답 피드백 */
 .error-feedback {
   position: fixed;
-  bottom: 80px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   background: #ff4444;
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: bold;
   z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 /* ========== 모바일 최적화 ========== */
 @media (max-width: 768px) {
   .symbol-grid {
-    gap: 0.4rem;
-    padding: 0.4rem;
+    gap: 1rem;
+    padding: 1rem;
   }
   
   .symbol-item,
   .symbol-cell {
-    padding: 0.3rem;
-    border-width: 1.5px;
+    padding: 0.8rem;
   }
 }
 
-/* 작은 모바일 (아이폰 SE 등) */
-@media (max-width: 375px) {
+/* 작은 모바일 */
+@media (max-width: 480px) {
   .symbol-grid {
-    gap: 0.3rem;
-    padding: 0.3rem;
+    gap: 0.8rem;
+    padding: 0.8rem;
   }
   
   .symbol-item,
   .symbol-cell {
-    padding: 0.2rem;
+    padding: 0.5rem;
+    border-width: 2px;
+  }
+}
+
+/* 가로 모드 */
+@media (orientation: landscape) and (max-height: 600px) {
+  .symbol-grid {
+    padding: 0.5rem;
+    gap: 0.5rem;
   }
 }
 
@@ -133,8 +154,13 @@
 @media (hover: none) and (pointer: coarse) {
   .symbol-item,
   .symbol-cell {
-    /* 터치 타겟 최소 크기 보장 */
+    /* 터치 타겟 최소 크기 보장 (Apple HIG: 44x44pt) */
     min-width: 44px;
     min-height: 44px;
+  }
+  
+  .symbol-item:active,
+  .symbol-cell:active {
+    background-color: #f5f5f5;
   }
 }
