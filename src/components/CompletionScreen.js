@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './CompletionScreen.css';
 import { apiClient, API_ENDPOINTS } from '../config/api';
 
-
-const API_URL = process.env.REACT_APP_API_URL || 'http://223.130.131.18/api';
-
 function CompletionScreen({ experimentData }) {
   const [status, setStatus] = useState('sending'); // sending, success, error
   const [message, setMessage] = useState('데이터를 전송하는 중...');
@@ -16,26 +13,14 @@ function CompletionScreen({ experimentData }) {
         console.log('📤 Sending experiment data...', experimentData);
 
         // 1. 실험 데이터 전송 (participant 생성 + trial 저장)
-        const mainResponse = await fetch(`${API_URL}/complete-experiment/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            demographic: experimentData.demographic,
-            practice_results: experimentData.practiceResults,
-            trial_results: experimentData.trialResults,
-            // 시작/완료 시간 포함
-            start_time: experimentData.startTime,
-            end_time: experimentData.endTime
-          })
+        const mainData = await apiClient.post(API_ENDPOINTS.completeExperiment, {
+          demographic: experimentData.demographic,
+          practice_results: experimentData.practiceResults,
+          trial_results: experimentData.trialResults,
+          start_time: experimentData.startTime,
+          end_time: experimentData.endTime
         });
 
-        if (!mainResponse.ok) {
-          throw new Error('실험 데이터 전송 실패');
-        }
-
-        const mainData = await mainResponse.json();
         const newParticipantId = mainData.participant_id;
         setParticipantId(newParticipantId);
         
@@ -47,23 +32,16 @@ function CompletionScreen({ experimentData }) {
           
           console.log('📤 Sending symbol preferences...', experimentData.symbolPreferences);
           
-          const prefResponse = await fetch(`${API_URL}/submit-symbol-preferences/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+          try {
+            const prefData = await apiClient.post(API_ENDPOINTS.submitSymbolPreferences, {
               participant_id: newParticipantId,
               preferences: experimentData.symbolPreferences
-            })
-          });
-
-          if (!prefResponse.ok) {
-            console.error('⚠️ Symbol preferences 전송 실패');
-            // 이건 실패해도 계속 진행 (선호도는 선택사항)
-          } else {
-            const prefData = await prefResponse.json();
+            });
+            
             console.log('✅ Symbol preferences saved:', prefData);
+          } catch (prefError) {
+            console.error('⚠️ Symbol preferences 전송 실패:', prefError);
+            // 이건 실패해도 계속 진행 (선호도는 선택사항)
           }
         } else {
           console.log('⚠️ No symbol preferences to send');
